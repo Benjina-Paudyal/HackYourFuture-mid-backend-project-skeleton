@@ -8,6 +8,7 @@ export async function up(knex) {
         t.string("currency", 3).notNullable();
         t.string("title").notNullable();
         t.text("description");
+        t.integer("user_id").unsigned().references("id").inTable("users").onDelete("CASCADE");
         t.timestamps(true, true);
     });
 }
