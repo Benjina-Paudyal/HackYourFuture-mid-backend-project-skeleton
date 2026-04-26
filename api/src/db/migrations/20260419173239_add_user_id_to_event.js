@@ -4,11 +4,14 @@
  */
 export async function up(knex) {
   await knex.schema.alterTable("event", (table) => {
-    table.integer("user_id")
+    table
+      .integer("user_id")
       .unsigned()
+      .notNullable()
       .references("id")
       .inTable("app_user")
-      .onDelete("SET NULL");
+      .onDelete("CASCADE")
+      .index();
   });
 }
 

@@ -13,3 +13,4 @@ JOIN app_user u ON e.user_id = u.id;
 
 -- total event count
 SELECT COUNT(*) FROM event;
+
