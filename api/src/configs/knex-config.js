@@ -20,8 +20,7 @@ export function createKnexConfig() {
                     process.env.DB_USE_SSL === "true"
                         ? { rejectUnauthorized: false }
                         : false,
-
-                // ✅ ADD THIS HERE (IMPORTANT)
+                
                 searchPath: ['public'],
               },
 

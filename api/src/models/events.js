@@ -33,6 +33,12 @@ function baseQuery(trx = db) {
     return trx(TABLE);
 }
 
+function applyFilters(qb, filters) {
+    if (filters.search) {
+        qb.whereILike("title", `%${filters.search}%`);
+    }
+}
+
 /**
  * Count events matching optional filters.
  *
@@ -49,7 +55,7 @@ export async function countEvents(filters = {}, options = {}) {
     const { trx } = options;
     const qb = baseQuery(trx);
 
-    // TODO (required project work): apply supported filters when filter features are implemented
+    applyFilters(qb, filters);
 
     const row = await qb.count({ count: "*" }).first();
     const count = row?.count ?? row?.["count(*)"] ?? 0;
@@ -92,7 +98,8 @@ export async function listEvents(filters = {}, options = {}) {
 
     const qb = baseQuery(trx).select("*");
 
-    // TODO (required project work): apply supported filters
+    // apply filters here
+    applyFilters(qb, filters);
 
     qb.orderBy(
         orderBy,
@@ -109,7 +116,6 @@ export async function listEvents(filters = {}, options = {}) {
 
     return qb;
 }
-
 /**
  * Find a single event by id.
  *
@@ -123,6 +129,7 @@ export async function listEvents(filters = {}, options = {}) {
  */
 export async function findEventById(id, { trx } = {}) {
     const row = await baseQuery(trx)
+    
         .where({ id })
         .first();
 
