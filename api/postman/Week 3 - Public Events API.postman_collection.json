@@ -12,12 +12,12 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "http://localhost:3001/api/events?page=0&pageSize=2&q=games",
+          "raw": "http://localhost:3000/api/events?page=0&pageSize=2&q=games",
           "protocol": "http",
           "host": [
             "localhost"
           ],
-          "port": "3001",
+          "port": "3000",
           "path": [
             "api",
             "events"
@@ -49,12 +49,12 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "http://localhost:3001/api/events/1",
+          "raw": "http://localhost:3000/api/events/1",
           "protocol": "http",
           "host": [
             "localhost"
           ],
-          "port": "3001",
+          "port": "3000",
           "path": [
             "api",
             "events",
@@ -70,12 +70,12 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "http://localhost:3001/api/events/9999",
+          "raw": "http://localhost:3000/api/events/9999",
           "protocol": "http",
           "host": [
             "localhost"
           ],
-          "port": "3001",
+          "port": "3000",
           "path": [
             "api",
             "events",
@@ -91,12 +91,12 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "http://localhost:3001/api/events?page=-1",
+          "raw": "http://localhost:3000/api/events?page=-1",
           "protocol": "http",
           "host": [
             "localhost"
           ],
-          "port": "3001",
+          "port": "3000",
           "path": [
             "api",
             "events"
