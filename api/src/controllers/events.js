@@ -70,7 +70,9 @@ export async function getEvents(req, res, next) {
         const { page, pageSize } = EventListQuery.parse(req.query);
         const offset = page * pageSize;
 
-        const filters = {}; // TODO (required project work): map req.query filters here
+        const filters = {
+            search: req.query.q
+        }; // TODO (required project work): map req.query filters here
 
         const data = await listEvents(filters, {
             limit: pageSize,

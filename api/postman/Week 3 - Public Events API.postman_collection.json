@@ -1,0 +1,115 @@
+{
+  "info": {
+    "_postman_id": "9eb16ee0-26cc-4775-b315-97f2962bc824",
+    "name": "Week 3 - Public Events API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "32779147"
+  },
+  "item": [
+    {
+      "name": "Get events(paginated)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3001/api/events?page=0&pageSize=2&q=games",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3001",
+          "path": [
+            "api",
+            "events"
+          ],
+          "query": [
+            {
+              "key": "page",
+              "value": "0",
+              "type": "text"
+            },
+            {
+              "key": "pageSize",
+              "value": "2",
+              "type": "text"
+            },
+            {
+              "key": "q",
+              "value": "games",
+              "type": "text"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get event by ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3001/api/events/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3001",
+          "path": [
+            "api",
+            "events",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get event (invalid ID)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3001/api/events/9999",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3001",
+          "path": [
+            "api",
+            "events",
+            "9999"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get events (invalid page)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3001/api/events?page=-1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3001",
+          "path": [
+            "api",
+            "events"
+          ],
+          "query": [
+            {
+              "key": "page",
+              "value": "-1"
+            }
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
