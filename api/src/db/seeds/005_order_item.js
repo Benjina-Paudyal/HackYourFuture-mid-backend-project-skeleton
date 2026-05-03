@@ -1,12 +1,16 @@
-/**
- * @param { import("knex").Knex } knex
- */
 export async function seed(knex) {
   await knex("order_item").del();
 
-  // get existing data
   const order = await knex("customer_order").first();
   const events = await knex("event").limit(2);
+
+  if (!order) {
+    throw new Error("No customer_order found. Run order seed first.");
+  }
+
+  if (events.length < 2) {
+    throw new Error("Not enough events found. Need at least 2 events.");
+  }
 
   await knex("order_item").insert([
     {

@@ -8,12 +8,14 @@ export async function up(knex) {
 
     table.integer("user_id")
       .unsigned()
+      .nullable()
       .references("id")
       .inTable("app_user")
       .onDelete("SET NULL");
 
     table.integer("cart_id")
       .unsigned()
+      .nullable()
       .references("id")
       .inTable("cart")
       .onDelete("SET NULL");
