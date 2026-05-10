@@ -6,3 +6,5 @@ const rootRouter = express.Router();
 rootRouter.use("/api", apiRouter);
 
 export default rootRouter;
+
+

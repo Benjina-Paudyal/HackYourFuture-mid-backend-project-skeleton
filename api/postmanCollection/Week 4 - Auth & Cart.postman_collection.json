@@ -1,0 +1,176 @@
+{
+  "info": {
+    "_postman_id": "526f6bc1-c261-4957-820b-331a9f792abe",
+    "name": "Week 4 - Auth & Cart",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "32779147"
+  },
+  "item": [
+    {
+      "name": "Signup",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"name\" : \"From postman\",\r\n    \"email\" : \"postman@postman.com\",\r\n    \"password\": \"Passw0rd\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/auth/signup",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "auth",
+            "signup"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Login",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"email\" : \"postman@postman.com\",\r\n    \"password\": \"Passw0rd\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/auth/login",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "auth",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get cart",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiZW1haWwiOiJwb3N0bWFuQHBvc3RtYW4uY29tIiwiaWF0IjoxNzc3ODMyMjg1LCJleHAiOjE3Nzc5MTg2ODV9.9D0PQhPppm60qVZOPt2cbWtQmdHzN3OeErloXREFhMY",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/api/cart?Aut",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "cart"
+          ],
+          "query": [
+            {
+              "key": "Aut",
+              "value": null,
+              "type": "text"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Add item",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiZW1haWwiOiJwb3N0bWFuQHBvc3RtYW4uY29tIiwiaWF0IjoxNzc3ODMyMjg1LCJleHAiOjE3Nzc5MTg2ODV9.9D0PQhPppm60qVZOPt2cbWtQmdHzN3OeErloXREFhMY",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"event_id\": 3,\r\n    \"quantity\": 4\r\n    \r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/cart/items",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "cart",
+            "items"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update item",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiZW1haWwiOiJwb3N0bWFuQHBvc3RtYW4uY29tIiwiaWF0IjoxNzc3ODMzMDgwLCJleHAiOjE3Nzc5MTk0ODB9.kgXZ-V1q5yanwEFRxaYPUCmhOBV8WTV_fr1LGu2ck9U",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"quantity\": 5\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/cart/items/2",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "cart",
+            "items",
+            "2"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
