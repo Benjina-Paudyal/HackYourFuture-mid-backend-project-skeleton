@@ -1,6 +1,5 @@
 import db from "../db/knex.js";
 
-// GET /api/cart
 export async function getCart(req, res) {
   try {
     if (!req.user?.id) {
@@ -36,7 +35,6 @@ export async function getCart(req, res) {
   }
 }
 
-// POST /api/cart/items
 export async function addItem(req, res) {
   try {
     if (!req.user?.id) {
@@ -91,7 +89,6 @@ export async function addItem(req, res) {
 }
 
 
-// PUT /api/cart/items/:itemId
 export async function updateItem(req, res) {
   try {
     if (!req.user?.id) {
@@ -145,5 +142,142 @@ export async function updateItem(req, res) {
     return res.json({ message: "Item updated" });
   } catch (err) {
     return res.status(500).json({ error: "Failed to update item" });
+  }
+}
+
+export async function deleteItem(req, res) {
+  try {
+    if (!req.user?.id) {
+      return res.status(401).json({
+        error: "Unauthorized",
+      });
+    }
+
+    const userId = req.user.id;
+    const { itemId } = req.params;
+
+    // Find active cart
+    const cart = await db("cart")
+      .where({
+        user_id: userId,
+        status: "active",
+      })
+      .first();
+
+    if (!cart) {
+      return res.status(404).json({
+        error: "Cart not found",
+      });
+    }
+
+    // Delete item from user's cart
+    const deleted = await db("cart_item")
+      .where({
+        id: itemId,
+        cart_id: cart.id,
+      })
+      .del();
+
+    if (!deleted) {
+      return res.status(404).json({
+        error: "Item not found",
+      });
+    }
+
+    return res.json({
+      message: "Item removed",
+    });
+
+  } catch (err) {
+
+    return res.status(500).json({
+      error: "Failed to delete item",
+    });
+  }
+}
+
+export async function checkout(req, res) {
+  try {
+    if (!req.user?.id) {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+
+    const userId = req.user.id;
+
+    const result = await db.transaction(async (trx) => {
+
+      // Get active cart
+      const cart = await trx("cart")
+        .where({ user_id: userId, status: "active" })
+        .first();
+
+      if (!cart) {
+        throw new Error("Cart not found");
+      }
+
+      // Get cart items
+      const cartItems = await trx("cart_item")
+        .where({ cart_id: cart.id });
+
+      if (cartItems.length === 0) {
+        throw new Error("Cart is empty");
+      }
+
+      // Calculate total
+      let total = 0;
+
+      for (const item of cartItems) {
+        const event = await trx("event")
+          .where({ id: item.event_id })
+          .first();
+
+        total += Number(event.price) * item.quantity;
+      }
+
+      // Create order
+      const [order] = await trx("customer_order")
+        .insert({
+          user_id: userId,
+          total_amount: total,
+          status: "completed"
+        })
+        .returning("*");
+
+      // Create order items
+      for (const item of cartItems) {
+        const event = await trx("event")
+          .where({ id: item.event_id })
+          .first();
+
+        await trx("order_item").insert({
+          order_id: order.id,
+          event_id: item.event_id,
+          quantity: item.quantity,
+          price: event.price
+        });
+      }
+
+      // Clear cart items
+      await trx("cart_item")
+        .where({ cart_id: cart.id })
+        .del();
+
+      // Reset cart
+      await trx("cart")
+        .where({ id: cart.id })
+        .update({ status: "completed" });
+
+      return order;
+    });
+
+    return res.json({
+      message: "Checkout successful",
+      order: result
+    });
+
+  } catch (err) {
+    return res.status(400).json({
+      error: err.message || "Checkout failed"
+    });
   }
 }
