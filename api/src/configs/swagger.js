@@ -8,14 +8,36 @@ import listEndpoints from "express-list-endpoints";
  * where to scan for @swagger annotations.
  */
 const swaggerOptions = {
-    definition: {
-        openapi: "3.0.0",
-        info: {
-            title: process.env.APP_NAME ?? "Backend-Mid-Specialism",
-            version: process.env.APP_VERSION ?? "0.0.1",
-            description: "API documentation",
+definition: {
+    openapi: "3.0.0",
+    info: {
+        title: process.env.APP_NAME ?? "Backend-Mid-Specialism",
+        version: process.env.APP_VERSION ?? "0.0.1",
+        description: "API documentation",
+    },
+
+    servers: [
+        {
+            url: "http://localhost:3000",
+        },
+    ],
+
+    components: {
+        securitySchemes: {
+            bearerAuth: {
+                type: "http",
+                scheme: "bearer",
+                bearerFormat: "JWT",
+            },
         },
     },
+
+    security: [
+        {
+            bearerAuth: [],
+        },
+    ],
+},
     apis: ["./src/routers/**/*.js", "./src/routers/*.js"],
 };
 

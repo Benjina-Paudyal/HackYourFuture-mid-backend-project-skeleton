@@ -3,7 +3,9 @@ import { authMiddleware } from "../middlewares/auth.middleware.js";
 import {
   getCart,
   addItem,
-  updateItem
+  updateItem,
+  deleteItem,
+  checkout
 } from "../controllers/cart.controller.js";
 
 const cartRouter = express.Router();
@@ -17,7 +19,7 @@ const cartRouter = express.Router();
  *       - bearerAuth: []
  *     responses:
  *       200:
- *         description: Cart fetched successfully
+ *         description: Returns cart with items
  *       401:
  *         description: Unauthorized
  */
@@ -82,4 +84,55 @@ cartRouter.post("/items", authMiddleware, addItem);
  */
 cartRouter.put("/items/:itemId", authMiddleware, updateItem);
 
+/**
+ * @swagger
+ * /api/cart/items/{itemId}:
+ *   delete:
+ *     summary: Remove item from cart
+ *     tags: [Cart]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: itemId
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Item removed
+ *       404:
+ *         description: Item not found
+ *       401:
+ *         description: Unauthorized
+ */
+// DELETE item
+cartRouter.delete(
+  "/items/:itemId",
+  authMiddleware,
+  deleteItem
+);
+
+/**
+ * @swagger
+ * /api/cart/checkout:
+ *   post:
+ *     summary: Checkout cart and create order
+ *     tags: [Cart]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Order created successfully
+ *       400:
+ *         description: Cart is empty or invalid state
+ *       401:
+ *         description: Unauthorized
+ */
+// CHECKOUT
+cartRouter.post(
+  "/checkout",
+  authMiddleware,
+  checkout
+);
 export default cartRouter;
